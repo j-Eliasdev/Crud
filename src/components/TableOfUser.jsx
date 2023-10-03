@@ -10,34 +10,19 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-
-const users = [
-  {
-    Id: 45,
-    name: "Peter Doe",
-    email: "peter@gmail.com",
-    github: "Peter",
-  },
-  {
-    Id: 4,
-    name: "Erika Casio",
-    email: "erika@gmail.com",
-    github: "Erika",
-  },
-  {
-    Id: 5,
-    name: "Pau Torres",
-    email: "pau@gmail.com",
-    github: "Pau",
-  },
-];
+import {  useSelector } from "react-redux";
+import { useUserActions } from "../hooks/userUsersActions";
 
 export function ListOfUsers() {
+
+  const {removeUser} = useUserActions()
+  const users = useSelector((state)=> state.users)
+
   return (
     <Card>
       <Title>
         Usuarios
-        <Badge size="lg">{users.length}</Badge>
+        <Badge className="ml-2">{users.length}</Badge>
       </Title>
       <Table>
         <TableHead>
@@ -57,19 +42,20 @@ export function ListOfUsers() {
               <TableCell className="flex items-center">
                 <img
                   className="w-8 h-8 rounded-full mr-2"
-                  src={`https://unavatar.io/github/${item.github}`}
+                  src={`https://unavatar.io/github/${item.gitHub}`}
                   alt={item.name}
                 />
                 {item.name}
               </TableCell>
               <TableCell>{item.email}</TableCell>
-              <TableCell>{item.github}</TableCell>
+              <TableCell>{item.gitHub}</TableCell>
               <TableCell>
                 <Button
                   className="mr-2"
                   size="xs"
                   variant="secondary"
                   color="gray"
+                 onClick={()=>removeUser(item.Id)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
